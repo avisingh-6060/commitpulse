@@ -196,7 +196,13 @@ export function generateSVG(
   @media (prefers-reduced-motion: reduce) { .heat-particles { display: none; } }
   </style>
 
-  <rect width="${W}" height="${H}" rx="${radius}" fill="${params.hideBackground ? 'transparent' : bg}" />
+  <rect
+   width="${W}"
+   height="${H}"
+   rx="${radius}"
+   fill="${params.hideBackground ? 'transparent' : bg}"
+   ${params.border ? `stroke="#${params.border}" stroke-width="2"` : ''}
+  />
 
   <g transform="translate(0, ${s(20)})">${towers}</g>
   ${

@@ -30,6 +30,7 @@ export async function GET(request: Request) {
       bg,
       text,
       accent,
+      border,
       scale,
       size,
       speed,
@@ -79,6 +80,7 @@ export async function GET(request: Request) {
       bg: isAutoTheme ? selectedTheme.bg : bg || selectedTheme.bg,
       text: isAutoTheme ? selectedTheme.text : text || selectedTheme.text,
       accent: isAutoTheme ? selectedTheme.accent : accent || selectedTheme.accent,
+      border,
 
       radius,
       speed,
