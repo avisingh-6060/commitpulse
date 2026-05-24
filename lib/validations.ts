@@ -18,6 +18,10 @@ export const streakParamsSchema = z.object({
     .string()
     .optional()
     .transform((val) => (val ? sanitizeHexColor(val, '00ffaa') : undefined)),
+  border: z
+    .string()
+    .optional()
+    .transform((val) => (val ? sanitizeHexColor(val, 'ffffff') : undefined)),
 
   // Silently fall back to 'linear' for unknown values (matches old behavior)
   scale: z.enum(['linear', 'log']).catch('linear').default('linear'),
