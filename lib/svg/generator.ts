@@ -169,45 +169,8 @@ function renderFooter(
   sf: number
 ): string {
   const s = (n: number) => Math.round(n * sf);
+
   return `
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="${W}"
-  height="${H}"
-  viewBox="0 0 ${W} ${H}"
-  fill="none"
-  role="img"
->
-  <title>CommitPulse Stats for ${safeUser}</title>
-  <desc>
-    ${params.user || 'This user'} has ${stats.totalContributions} total contributions and a longest streak of ${stats.longestStreak} days.
-  </desc>
-  <defs>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${fs(5)}" result="blur" /><feComposite in="SourceGraphic" in2="blur" operator="over" /></filter>
-  </defs>
-
-  <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&amp;family=JetBrains+Mono&amp;family=Roboto&amp;display=swap');
-  ${googleFontsImport}
-  ${TOWER_ANIMATION_CSS}
-
-  .title { font-family: ${selectedFont || '"Syncopate", sans-serif'}; fill: ${text}; font-size: ${fs(18)}px; letter-spacing: ${fs(6)}px; font-weight: 400; opacity: 0.8; }
-  .stats { font-family: ${statsFont}; fill: ${text}; font-size: ${fs(42)}px; font-weight: 500; letter-spacing: 0; }
-  .total-val { font-family: ${statsFont}; fill: ${accent}; font-size: ${fs(24)}px; font-weight: 500; }
-  .label { font-family: "Roboto", sans-serif; fill: ${accent}; font-size: ${fs(11)}px; font-weight: 400; letter-spacing: ${fs(2)}px; opacity: 0.7; }
-
-  @media (prefers-reduced-motion: reduce) { .heat-particles { display: none; } }
-  </style>
-
-  <rect
-   width="${W}"
-   height="${H}"
-   rx="${radius}"
-   fill="${params.hideBackground ? 'transparent' : bg}"
-   ${params.border ? `stroke="#${params.border}" stroke-width="2"` : ''}
-  />
-
-  <g transform="translate(0, ${s(20)})">${towers}</g>
   ${
     !params.hide_stats
       ? `
@@ -215,19 +178,39 @@ function renderFooter(
     <text class="label">${labels.CURRENT_STREAK}</text>
     <text y="${s(40)}" class="stats" filter="url(#glow)">${stats.currentStreak}</text>
   </g>
+
   <g transform="translate(${s(300)}, ${s(340)})" text-anchor="middle">
     <text class="label">${labels.ANNUAL_SYNC_TOTAL}</text>
     <text y="${s(40)}" class="total-val" filter="url(#glow)">${stats.totalContributions}</text>
   </g>
+
   <g transform="translate(${s(560)}, ${s(340)})" text-anchor="end">
     <text class="label">${labels.PEAK_STREAK}</text>
     <text y="${s(40)}" class="stats">${stats.longestStreak}</text>
   </g>`
       : ''
   }
-  ${!params.hide_title ? `<text x="${s(300)}" y="${s(50)}" text-anchor="middle" class="title">${safeUser.toUpperCase()}</text>` : ''}
-  <rect x="${s(100)}" y="${s(60)}" width="${s(400)}" height="${sf}" fill="${accent}" fill-opacity="0.3">
-    <animate attributeName="y" values="${s(80)};${s(320)};${s(80)}" dur="${params.speed || '8s'}" repeatCount="indefinite" />
+
+  ${
+    !params.hide_title
+      ? `<text x="${s(300)}" y="${s(50)}" text-anchor="middle" class="title">${safeUser.toUpperCase()}</text>`
+      : ''
+  }
+
+  <rect
+    x="${s(100)}"
+    y="${s(60)}"
+    width="${s(400)}"
+    height="${sf}"
+    fill="${accent}"
+    fill-opacity="0.3"
+  >
+    <animate
+      attributeName="y"
+      values="${s(80)};${s(320)};${s(80)}"
+      dur="${params.speed || '8s'}"
+      repeatCount="indefinite"
+    />
   </rect>`;
 }
 
